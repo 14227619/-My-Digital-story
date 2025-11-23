@@ -1,0 +1,1078 @@
+/* --- Root Variables & Base Styles --- */
+:root {
+    /* Light Theme (Default) */
+    --bg-color: #f4f4f9;
+    --text-color: #333;
+    --primary-color: #6a11cb;
+    --secondary-color: #2575fc;
+    --header-bg: rgba(244, 244, 249, 0.8);
+    --card-bg: #ffffff;
+    --glow-color-faded: rgba(138, 43, 226, 0.5);
+    --glow-color: #8a2be2;
+    --button-text: #fff;
+}
+
+[data-theme="dark"] {
+    --bg-color: #121212;
+    --text-color: #e0e0e0;
+    --primary-color: #bb86fc;
+    --secondary-color: #03dac6;
+    --header-bg: rgba(18, 18, 18, 0.8);
+    --card-bg: #1e1e1e;
+    --glow-color-faded: rgba(187, 134, 252, 0.5);
+    --glow-color: #bb86fc;
+    --button-text: #121212;
+}
+
+[data-theme="red"] {
+    --bg-color: #1c0000;
+    --text-color: #ffdddd;
+    --primary-color: #ff414d;
+    --secondary-color: #f5626b;
+    --header-bg: rgba(28, 0, 0, 0.8);
+    --card-bg: #2b0000;
+    --glow-color-faded: rgba(255, 65, 77, 0.5);
+    --glow-color: #ff414d;
+    --button-text: #fff;
+}
+
+[data-theme="aqua"] {
+    --bg-color: #05161A;
+    --text-color: #cce7e8;
+    --primary-color: #07DEE6;
+    --secondary-color: #4397a3;
+    --header-bg: rgba(5, 22, 26, 0.8);
+    --card-bg: #0c2f36;
+    --glow-color-faded: rgba(7, 222, 230, 0.5);
+    --glow-color: #07DEE6;
+    --button-text: #05161A;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    margin: 0;
+    position: relative;
+    overflow-x: hidden;
+    /* Layered background: animated gradients, corner glows, and dot pattern */
+    background-image:
+        radial-gradient(circle at 20% 80%, var(--glow-color-faded) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, var(--glow-color-faded) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, var(--secondary-color) 0%, transparent 50%),
+        linear-gradient(45deg, var(--primary-color) 0%, transparent 25%, var(--secondary-color) 50%, transparent 75%, var(--primary-color) 100%),
+        radial-gradient(var(--secondary-color) 1px, transparent 1px);
+    background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, repeat;
+    background-size: 200% 200%, 200% 200%, 150% 150%, 400% 400%, 25px 25px;
+    background-position: 0 0, 0 0, 0 0, 0 0, -1px -1px;
+    animation: gradientShift 20s ease-in-out infinite, particleFloat 30s ease-in-out infinite;
+    transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+/* --- Preloader --- */
+#preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--bg-color);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.75s ease, visibility 0.75s ease;
+}
+
+#preloader.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.loader {
+    width: 50px;
+    height: 50px;
+    border: 5px solid var(--secondary-color);
+    border-top-color: var(--primary-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+/* --- Animations & Effects --- */
+@keyframes flicker {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulseGlow {
+    0%, 100% {
+        text-shadow: 0 0 8px var(--primary-color), 0 0 16px var(--glow-color), 0 0 24px var(--glow-color);
+    }
+    50% {
+        text-shadow: 0 0 12px var(--primary-color), 0 0 24px var(--glow-color), 0 0 36px var(--glow-color);
+    }
+}
+
+.glowing-text {
+    color: var(--primary-color);
+    text-shadow: 0 0 5px var(--glow-color), 0 0 10px var(--glow-color), 0 0 15px var(--glow-color);
+    transition: color 0.5s ease, text-shadow 0.5s ease;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes gradientShift {
+    0%, 100% {
+        background-position: 0 0, 0 0, 0 0, 0 0, -1px -1px;
+    }
+    25% {
+        background-position: 100% 100%, 100% 100%, 50% 50%, 100% 0, -1px -1px;
+    }
+    50% {
+        background-position: 200% 200%, 200% 200%, 100% 100%, 200% 100%, -1px -1px;
+    }
+    75% {
+        background-position: 100% 100%, 100% 100%, 50% 50%, 100% 200%, -1px -1px;
+    }
+}
+
+@keyframes particleFloat {
+    0%, 100% {
+        background-size: 200% 200%, 200% 200%, 150% 150%, 400% 400%, 25px 25px;
+    }
+    50% {
+        background-size: 250% 250%, 250% 250%, 200% 200%, 500% 500%, 30px 30px;
+    }
+}
+
+.flicker {
+    animation: flicker 3s infinite;
+}
+
+/* --- Particles.js Background --- */
+#particles-js {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+
+/* --- Floating Geometric Shapes --- */
+.floating-shapes {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.shape {
+    position: absolute;
+    opacity: 0.1;
+    animation: float 20s infinite linear;
+}
+
+.shape:nth-child(1) {
+    top: 10%;
+    left: 10%;
+    width: 60px;
+    height: 60px;
+    background: var(--primary-color);
+    border-radius: 50%;
+    animation-delay: 0s;
+    animation-duration: 25s;
+}
+
+.shape:nth-child(2) {
+    top: 20%;
+    right: 15%;
+    width: 40px;
+    height: 40px;
+    background: var(--secondary-color);
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+    animation-delay: 5s;
+    animation-duration: 30s;
+}
+
+.shape:nth-child(3) {
+    bottom: 30%;
+    left: 20%;
+    width: 80px;
+    height: 80px;
+    background: var(--glow-color);
+    clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+    animation-delay: 10s;
+    animation-duration: 35s;
+}
+
+.shape:nth-child(4) {
+    top: 60%;
+    right: 10%;
+    width: 50px;
+    height: 50px;
+    background: var(--primary-color);
+    transform: rotate(45deg);
+    animation-delay: 15s;
+    animation-duration: 28s;
+}
+
+.shape:nth-child(5) {
+    bottom: 15%;
+    left: 60%;
+    width: 70px;
+    height: 70px;
+    background: var(--secondary-color);
+    border-radius: 20px;
+    animation-delay: 20s;
+    animation-duration: 32s;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0px) rotate(0deg);
+    }
+    25% {
+        transform: translateY(-20px) rotate(90deg);
+    }
+    50% {
+        transform: translateY(0px) rotate(180deg);
+    }
+    75% {
+        transform: translateY(20px) rotate(270deg);
+    }
+    100% {
+        transform: translateY(0px) rotate(360deg);
+    }
+}
+
+/* --- Twinkling Stars Effect --- */
+.stars {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.star {
+    position: absolute;
+    background: var(--glow-color);
+    border-radius: 50%;
+    animation: twinkle 3s infinite ease-in-out;
+}
+
+.star:nth-child(1) { top: 15%; left: 25%; width: 2px; height: 2px; animation-delay: 0s; }
+.star:nth-child(2) { top: 35%; left: 75%; width: 3px; height: 3px; animation-delay: 1s; }
+.star:nth-child(3) { top: 55%; left: 45%; width: 1px; height: 1px; animation-delay: 2s; }
+.star:nth-child(4) { top: 75%; left: 85%; width: 2px; height: 2px; animation-delay: 0.5s; }
+.star:nth-child(5) { top: 25%; left: 65%; width: 1px; height: 1px; animation-delay: 1.5s; }
+.star:nth-child(6) { top: 45%; left: 15%; width: 3px; height: 3px; animation-delay: 2.5s; }
+.star:nth-child(7) { top: 65%; left: 35%; width: 2px; height: 2px; animation-delay: 0.8s; }
+.star:nth-child(8) { top: 85%; left: 55%; width: 1px; height: 1px; animation-delay: 1.8s; }
+
+@keyframes twinkle {
+    0%, 100% { opacity: 0.3; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.5); }
+}
+
+/* --- Header & Navigation --- */
+header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background-color: var(--header-bg);
+    backdrop-filter: blur(12px);
+    padding: 0.5rem 5%; /* Reduced top and bottom padding */
+    box-shadow: 0 2px 20px -5px var(--glow-color);
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2rem;
+    font-weight: 700; /* This was already here, but I'm confirming it's correct */
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: 400;
+    transition: color 0.3s ease, text-shadow 0.3s ease, transform 0.3s ease;
+    padding-bottom: 5px;
+    position: relative;
+}
+.nav-links a:hover,
+.nav-links a:focus {
+    color: var(--primary-color);
+    outline: none; /* Remove default outline in favor of custom style */
+    text-shadow: 0 0 5px var(--glow-color);
+    transform: translateY(-2px); /* Subtle lift effect */
+}
+
+.nav-links a.active {
+    color: var(--primary-color);
+    /* Apply the intense, pulsing glow animation */
+    animation: pulseGlow 2s infinite ease-in-out;
+}
+
+/* Animated underline for hover/focus */
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--primary-color);
+    transform: scaleX(0);
+    transform-origin: bottom right;
+    transition: transform 0.3s ease-out;
+}
+
+.nav-links a:hover::after,
+.nav-links a:focus::after,
+.nav-links a.active::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+}
+
+.controls {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.controls button {
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--text-color);
+    padding: 0.4rem 0.8rem;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 0.9em;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.theme-switcher button:focus, .lang-switcher button:focus {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+    /* A fallback for browsers that don't support outline-offset */
+    box-shadow: 0 0 0 2px var(--primary-color);
+}
+
+.controls button.active {
+    background-color: var(--primary-color);
+    color: var(--button-text);
+    border-color: var(--primary-color);
+}
+
+/* --- Sections --- */
+.hero {
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.hero h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(2.5rem, 10vw, 5rem);
+    animation: fadeInUp 1s ease-out 0.5s forwards;
+    opacity: 0; /* Start hidden */
+}
+
+.hero p {
+    font-size: 1.2rem;
+    margin-top: 1rem;
+    animation: fadeInUp 1s ease-out 1s forwards;
+    opacity: 0; /* Start hidden */
+}
+
+.content-section, .content-section-dark {
+    padding: 4rem 10%;
+    text-align: center;
+}
+
+.content-section-dark {
+    background-color: var(--card-bg);
+    transition: background-color 0.5s ease;
+}
+
+.content-section h2, .content-section-dark h2 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+}
+
+.story-content {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: left;
+    line-height: 1.8;
+}
+
+/* --- Poetry Section --- */
+.poetry-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    align-items: center;
+}
+.urdu-poetry {
+    font-family: 'Noto Nastaliq Urdu', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    direction: rtl;
+    line-height: 2.5;
+    color: var(--primary-color);
+    text-shadow: 0 0 3px var(--glow-color);
+}
+.english-poetry {
+    font-family: 'Poppins', sans-serif;
+    font-style: italic;
+    color: var(--secondary-color);
+}
+
+.poetry-container blockquote {
+    position: relative;
+    padding-bottom: 2.5rem; /* Space for the button */
+}
+
+.poetry-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+    direction: ltr; /* Ensure actions are left-to-right even in Urdu blocks */
+}
+
+.poetry-footer footer {
+    font-size: 1rem;
+    font-style: normal;
+}
+
+.poetry-actions {
+    display: flex;
+    gap: 0.5rem;
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+}
+
+.copy-btn {
+    background: transparent;
+    border: 1px solid var(--secondary-color);
+    color: var(--secondary-color);
+    cursor: pointer;
+    padding: 0.4rem 0.6rem;
+    border-radius: 5px;
+    opacity: 0; /* Hidden by default */
+    transition: opacity 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+}
+
+.poetry-container blockquote:hover .copy-btn {
+    opacity: 0.7; /* Visible on hover of the blockquote */
+}
+
+.copy-btn:hover {
+    opacity: 1;
+    background-color: var(--secondary-color);
+    color: var(--bg-color);
+}
+
+.copy-btn.copied {
+    background-color: var(--primary-color);
+    color: var(--button-text);
+    border-color: var(--primary-color);
+}
+
+.like-btn {
+    background: transparent;
+    border: 1px solid var(--secondary-color);
+    color: var(--secondary-color);
+    cursor: pointer;
+    padding: 0.4rem 0.6rem;
+    border-radius: 5px;
+    opacity: 0; /* Hidden by default */
+    transition: opacity 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+    position: relative; /* For positioning the animation */
+}
+
+.poetry-container blockquote:hover .like-btn {
+    opacity: 0.7; /* Visible on hover of the blockquote */
+}
+
+.like-btn:hover {
+    opacity: 1;
+    background-color: var(--secondary-color);
+    color: var(--bg-color);
+}
+
+.like-btn.liked {
+    background-color: #e2264d;
+    color: #fff;
+    border-color: #e2264d;
+}
+
+/* Heart burst animation */
+.like-btn .heart-burst {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 10px;
+    height: 10px;
+    background: #e2264d;
+    border-radius: 50%;
+    opacity: 0;
+    animation: heartBurst 0.7s ease-out forwards;
+}
+
+@keyframes heartBurst {
+    0% {
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 0.8;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(5);
+        opacity: 0;
+    }
+}
+
+
+/* --- AI Chat Assistant --- */
+.chat-container {
+    max-width: 700px;
+    margin: 0 auto;
+    background-color: var(--card-bg);
+    border: 1px solid var(--secondary-color);
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    transition: background-color 0.5s ease, border-color 0.5s ease;
+}
+
+.chat-box {
+    height: 300px;
+    overflow-y: auto;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    border-bottom: 1px solid var(--secondary-color);
+}
+
+.message {
+    padding: 0.8rem 1.2rem;
+    border-radius: 15px;
+    max-width: 70%;
+    line-height: 1.5;
+}
+
+.ai-message {
+    background-color: var(--secondary-color);
+    color: var(--bg-color);
+    align-self: flex-start;
+    border-bottom-left-radius: 0;
+}
+
+.user-message {
+    background-color: var(--primary-color);
+    color: var(--button-text);
+    align-self: flex-end;
+    border-bottom-right-radius: 0;
+}
+
+.chat-input-area {
+    display: flex;
+    padding-top: 1rem;
+}
+
+#user-input {
+    flex-grow: 1;
+    border: 1px solid var(--secondary-color);
+    background: transparent;
+    color: var(--text-color);
+    padding: 0.8rem;
+    border-radius: 5px 0 0 5px;
+    outline: none;
+}
+
+#send-btn {
+    border: none;
+    background-color: var(--primary-color);
+    color: var(--button-text);
+    padding: 0.8rem 1.5rem;
+    cursor: pointer;
+    border-radius: 0 5px 5px 0;
+    transition: background-color 0.3s;
+}
+
+#send-btn:hover {
+    opacity: 0.9;
+}
+
+/* --- Gallery Section --- */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.gallery-grid-placeholder {
+    min-height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px dashed var(--secondary-color);
+    border-radius: 8px;
+}
+
+.gallery-item {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 8px;
+    border: 2px solid var(--secondary-color);
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    padding: 1rem;
+    box-sizing: border-box;
+    background-color: var(--card-bg);
+    cursor: pointer;
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensures the image covers the area without distortion */
+}
+.gallery-item:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 25px var(--glow-color);
+}
+
+.gallery-item svg {
+    width: 100%;
+    height: 100%;
+}
+/* --- Gallery Modal --- */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(5px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.modal-overlay.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-content {
+    position: relative;
+    background-color: var(--card-bg);
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 90vw;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 0 30px var(--glow-color);
+    transform: scale(0.95);
+    transition: transform 0.3s ease;
+}
+
+.modal-overlay.visible .modal-content {
+    transform: scale(1);
+}
+
+.modal-close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: none;
+    border: none;
+    color: var(--text-color);
+    font-size: 2.5rem;
+    cursor: pointer;
+    line-height: 1;
+    opacity: 0.7;
+    transition: opacity 0.3s;
+}
+
+.modal-close:hover {
+    opacity: 1;
+}
+
+#modal-image {
+    max-width: 100%;
+    max-height: 75vh;
+    border-radius: 4px;
+}
+
+#modal-caption {
+    margin-top: 15px;
+    color: var(--primary-color);
+    font-style: italic;
+}
+
+/* --- Messages Section --- */
+.message-form {
+    max-width: 700px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.message-form input,
+.message-form textarea {
+    background-color: var(--card-bg);
+    border: 1px solid var(--secondary-color);
+    color: var(--text-color);
+    padding: 1rem;
+    border-radius: 5px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.message-form input:focus,
+.message-form textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 10px var(--glow-color);
+}
+
+.message-form button {
+    border: none;
+    padding: 1rem;
+    cursor: pointer;
+}
+
+/* --- Footer --- */
+footer {
+    text-align: center;
+    padding: 2rem 5%;
+    border-top: 1px solid var(--secondary-color);
+    background-color: var(--card-bg);
+}
+
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.social-links a {
+    color: var(--text-color);
+    transition: color 0.3s ease, transform 0.3s ease;
+    display: inline-block;
+}
+
+.social-links a:hover {
+    color: var(--primary-color);
+    transform: scale(1.1);
+}
+
+/* --- Key Moments Carousel --- */
+.carousel-container {
+    position: relative;
+    max-width: 800px;
+    margin: 2rem auto 0;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+}
+
+.carousel-slides {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+.carousel-slide {
+    min-width: 100%;
+    box-sizing: border-box;
+    padding: 2rem 4rem;
+    background-color: var(--card-bg);
+    text-align: center;
+}
+
+.carousel-slide h3 {
+    color: var(--primary-color);
+    font-family: 'Orbitron', sans-serif;
+    margin-top: 0;
+}
+
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0,0,0,0.3);
+    color: white;
+    border: none;
+    font-size: 2rem;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    z-index: 10;
+    transition: background-color 0.3s;
+}
+.carousel-btn:hover,
+.carousel-btn:focus {
+    background-color: var(--primary-color);
+    outline: none;
+}
+
+.prev-btn { left: 10px; }
+.next-btn { right: 10px; }
+
+
+/* --- Back to Top Button --- */
+#back-to-top-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background-color: var(--primary-color);
+    color: var(--button-text);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    text-decoration: none;
+    font-size: 24px;
+    font-weight: bold;
+    box-shadow: 0 0 15px var(--glow-color);
+    z-index: 99;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: opacity 0.3s, visibility 0.3s, transform 0.3s;
+}
+
+#back-to-top-btn.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* --- Scroll Animation --- */
+.animate-on-scroll {
+    opacity: 0;
+    transform: translateY(30px); /* Start slightly lower */
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.animate-on-scroll.is-visible {
+    opacity: 1;
+    transform: translateY(0); /* Move to original position */
+}
+
+/* --- Music Player --- */
+#music-player-container {
+    position: fixed;
+    bottom: 30px;
+    left: 30px;
+    z-index: 99;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background-color: rgba(0,0,0,0.3);
+    padding: 5px 10px;
+    border-radius: 50px;
+}
+
+#play-pause-btn {
+    width: 50px;
+    height: 50px;
+    background-color: var(--primary-color);
+    color: var(--button-text);
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 0 15px var(--glow-color);
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+#play-pause-btn:hover,
+#play-pause-btn:focus {
+    transform: scale(1.1);
+}
+
+#prev-track-btn, #next-track-btn {
+    background: none;
+    border: none;
+    color: var(--button-text);
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.3s;
+}
+
+#prev-track-btn:hover, #next-track-btn:hover,
+#prev-track-btn:focus, #next-track-btn:focus {
+    opacity: 1;
+}
+/* Player Info (Song Title + Volume) Styling */
+.player-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    width: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: width 0.5s ease-in-out, opacity 0.5s ease-in-out;
+}
+
+#music-player-container:hover .player-info {
+    width: 260px; /* Adjust width to fit title and slider */
+    opacity: 1;
+}
+
+#song-title {
+    color: var(--button-text);
+    font-size: 0.9em;
+    white-space: nowrap;
+    font-weight: 300;
+}
+
+.volume-control {
+    display: flex;
+    align-items: center;
+}
+
+.volume-icon {
+    color: var(--button-text);
+    margin-right: 5px;
+}
+
+#volume-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100px;
+    height: 5px;
+    background: var(--secondary-color);
+    border-radius: 5px;
+    outline: none;
+    opacity: 0.7;
+    transition: opacity .2s;
+}
+
+#volume-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 15px;
+    height: 15px;
+    background: var(--primary-color);
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+/* --- Responsive Design --- */
+@media (max-width: 768px) {
+    body {
+        font-size: 15px; /* Slightly smaller base font for mobile */
+    }
+
+    .logo {
+        font-size: 1.8rem; /* Make logo slightly smaller */
+    }
+
+    .hero {
+        height: 70vh; /* Reduce hero height on smaller screens */
+    }
+
+    .content-section, .content-section-dark {
+        padding: 3rem 5%; /* Reduce side padding on smaller screens */
+    }
+
+    .urdu-poetry {
+        font-size: 1.3rem; /* Reduce font size for Urdu poetry */
+        line-height: 2.2;
+    }
+
+    .carousel-slide {
+        padding: 2rem; /* Reduce padding inside carousel */
+    }
+
+    .nav-right {
+        /* Allow the right side of the nav to scroll if it's too wide */
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+        scrollbar-width: none; /* Hide scrollbar for Firefox */
+        padding-bottom: 5px; /* Add a little space for the scrollbar area */
+    }
+    .nav-right::-webkit-scrollbar {
+        display: none; /* Hide scrollbar for Chrome, Safari, and Opera */
+    }
+
+    #music-player-container {
+        left: 15px;
+        bottom: 15px;
+    }
+
+    #back-to-top-btn {
+        right: 15px;
+        bottom: 15px;
+        width: 45px;
+        height: 45px;
+    }
+
+    #music-player-container:hover .player-info {
+        width: 200px; /* Make expanded music player smaller */
+    }
+}
